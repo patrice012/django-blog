@@ -1,0 +1,25 @@
+    <footer class="p-3 p-lg-5   bg-dark text-center text-light position-relative">
+      <div class="container d-none d-md-block">
+        <div class="row justify-content-between ">
+          <div class=" col col-md-6 col-lg-3 lead">
+            <h3 class="pb-1">Contact</h3>
+            <a class="d-block text-light text-decoration-none" href="tel:+49.157.0156">+49 157 0156</a>
+            <a class="d-block text-light text-decoration-none" href="mailto:exemple@exemple.com">Send email to nowhere</a>
+            <a class="d-block text-light text-decoration-none" href="https://www.exemple.com">exemple </a>
+          </div>
+
+          <div class="col col-md-6 col-lg-3 lead">
+            <h3>Liens Importants</h3>
+            <div class="mt-4">
+              <a class="d-block text-light text-decoration-none" href="{% url 'mypost:post_list' %}">Blog</a>
+              <a class="d-block text-light text-decoration-none" href="#">Politique de confidentialité</a>
+              <a class="d-block text-light text-decoration-none" href="#">Voir son compte</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mt-4">
+        <p class="lead">Copyright &copy {% now 'y' %} Padawans.io</p>
+      </div>
+    </footer>

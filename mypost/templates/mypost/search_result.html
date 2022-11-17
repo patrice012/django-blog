@@ -1,0 +1,96 @@
+{% extends 'mypost/base.html' %}
+
+
+
+{% block content %}
+
+<section class="p-5 mt-5 search">
+    
+    {% if queryset %}
+    
+        {% if queryset.count == 1 %}
+            {% if query == "" %}
+                <h2 class="text-center  mb-5 lead fs-2">Resultat de la recherche. <em class="d-block fs-5 fw-light">Aucun mot clés saisis!</em></h2>
+            {% else %}
+                <h2 class="text-center  mb-5 lead fs-2">Resultat pour la recherche de "" {{query}}""</h2>
+            {% endif %}
+                
+        {% else %}
+            {% if query == "" %}
+                <h2 class="text-center  mb-5 lead fs-2">Resultats de la recherche. <em class="d-block fs-5 fw-light">Aucun mot clés saisis!</em></h2>
+            {% else %}
+                <h2 class="text-center  mb-5 lead fs-2">Resultats pour la recherche de "" {{query}}""</h2>
+            {% endif %}
+        {% endif %}
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-between align-items-center">
+            {% for post in queryset %}
+            
+            
+            {% comment %}
+            <div class="col carding rounded mb-5">
+            <div class="card border-info shadow">
+
+                <div class="img-resize ">
+                <a href="{{post.get_absolute_url}}">
+                    <img src="{{post.post_image.url}}" class="card-img-top img-fluid " alt="...">
+                </a>
+                </div>
+
+                <div class="card-body">
+                <a href="{{post.get_absolute_url}}">
+                    <h5 class="card-title text-center lead fs-5 fw-semibold ">{{post.title}}</h5>
+                </a>
+                <p class="card-text">{{post.contenu}}</p>
+                <a class="btn btn-outline-primary " href="{{post.get_absolute_url}}">Read more</a>
+                <!-- <button class="btn btn-outline-primary">Read more</button> -->
+                <!-- <span class="px-2">pub:{{post.created}}</span> -->
+                </div>
+            </div>
+            </div>
+            {% endcomment %}
+                    
+
+                          <div  class="carding pb-5 h-auto rounded boar_card">
+            <div class="card h-auto pb-md-3 border-info shadow">
+                <div class="img_resize">
+                  <a href="{{post.get_absolute_url}}">
+                      <img src="{{post.post_image.url}}" class="card-img img-fluid w-100 h-90 " alt="...">
+                  </a>
+                </div>
+
+
+                <div class="card-body">
+                  <a href="{{post.get_absolute_url}}">
+                       <h5 class="card-title text-center lead fs-5 fw-semibold ">{{post.title}}</h5>
+                   </a>
+                   <hr>
+                   <br>
+                  <p class="card-text">{{post.content | truncatewords:"24"}}</p>
+                  <hr>
+                  <a class="btn btn-outline-primary d-inline " href="{{post.get_absolute_url}}">Read more</a>
+                  <!-- <button class="btn btn-outline-primary">Read more</button> -->
+                  <!-- <span class="px-2">pub:{{post.created}}</span> -->
+                  <h2 class="pb-4 fw-lighter fs-5 pt-3 px-5 d-lg-inline">By
+                    <a class=" text-capitalize px-1" href="{% url 'profilapp:profile' post.post_by.profile.id %}">
+                      @{{post.post_by.profile.first_name}}
+                    </a>
+                  </h2>
+                  
+                </div>
+              </div>
+            </div>
+                
+                {% endfor %}
+
+    
+        </div>
+    
+    {% else %}
+    <div class="container ">
+        <h2 class="text-center mb-5 lead fs-1">Ooops! aucun resultat trouvé.  Réessayer avec d'autres mots clés!""</h2>
+    </div>
+    {% endif %}
+</section>
+
+{% endblock content %}

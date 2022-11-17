@@ -1,0 +1,18 @@
+{% extends 'mypost/base.html' %} {% block content %}
+
+<!-- {{author}} -->
+<div class="col form-modif-delete">
+  <div class="container mt-5 d-block text-center delete">
+    <a href="{{post.get_absolute_url}}" class="btn btn-info text-dark"
+      >Annuler la suppression</a
+    >
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <button class="btn btn-danger" type="submit">
+        Confirmer la suppression
+      </button>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

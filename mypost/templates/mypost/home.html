@@ -1,0 +1,193 @@
+{% extends 'mypost/base.html' %}
+{% load static %}
+
+{% block content %}
+<header class=" header bg-dark text-light p-5 text-center text-sm-start ">
+      <div class="container">
+        <div class="d-sm-flex pt-5 p-lg-6rem align-items-center justify-content-between">
+          <div>
+
+<h5 class="text-light">
+
+</h5>
+
+            <h1><span class="text-warning pe-2">Gardian</span>post editor</h1>
+            <p class="lead my-4 w-50">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde
+              quae accusantium quo deserunt eaque animi. Fuga ratione quaerat ut
+              ipsum!
+            </p>
+
+            <div class="d-xs-flex align-items-center justify-content-center">
+              <button class="btn btn-primary btn-lg mx-2 mb-4 mb-sm-0">read some post</button>
+              <button type="button" class="btn btn-outline-warning btn-lg  mb-4 mb-sm-0">
+                Devenir auteur
+              </button>
+
+            </div>
+          </div>
+          
+        </div>
+      </div>
+</header>
+
+<section class="p-5 mb-5" >
+      <div class="container pb-5">
+        <h2 class="text-center text-capitalize fw-bolder fs-5rem ">Our vocations!</h2>
+      </div>
+
+      <div class="container">
+        <div class="row text-center gap-5">
+          <div class="col-md">
+            <div class="card bg-dark text-light">
+              <div class="card-body text-center">
+                <div class="h1 mb-3">
+                  <i class="bi bi-laptop"></i>
+                </div>
+                <h3 class="card-title mb-3">Lorem, ipsum.</h3>
+                <p class="card-text">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt non ea facere? Aliquid, tenetur?
+                </p>
+
+                <a href="#" class="btn btn-primary mt-2">Read more</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md">
+            <div class="card bg-dark text-light">
+              <div class="card-body text-center">
+                <div class="h1 mb-3">
+                  <i class="bi bi-laptop"></i>
+                </div>
+                <h3 class="card-title mb-3">Lorem, ipsum.</h3>
+                <p class="card-text">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt non ea facere? Aliquid, tenetur?
+                </p>
+
+                <a href="#" class="btn btn-primary mt-2">Read more</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md">
+            <div class="card bg-dark text-light">
+              <div class="card-body text-center">
+                <div class="h1 mb-3">
+                  <i class="bi bi-laptop"></i>
+                </div>
+                <h3 class="card-title mb-3">Lorem, ipsum.</h3>
+                <p class="card-text">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt non ea facere? Aliquid, tenetur?
+                </p>
+
+                <a href="#" class="btn btn-primary mt-2">Read more</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>
+
+
+<section class="p-2 bg-dark text-light">
+      <div class="container ">
+        <div class="row align-items-center justify-content-between">
+          <div class="col-md h-75 w-75">
+            
+            {% comment %}
+            <img src="{% static 'mypost/images/horizon.jpg' %}" alt="">
+            {% endcomment %}
+              
+          </div>
+          <div class="col-md p-5">
+            <h2>Learn the fondamentals</h2>
+            <p class="lead">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam voluptatibus ad culpa iure. Dolorem saepe cumque commodi? Quod, quae. Impedit eos, quibusdam alias porro cupiditate nesciunt tenetur est dicta exercitationem veniam quos temporibus laudantium voluptatem. Sequi nostrum hic deserunt, error ex animi reprehenderit necessitatibus deleniti ea enim a itaque mollitia!</p>
+            <a href="" class="btn btn-outline-warning  mt-3">Read more</a>
+          </div>
+        </div>
+      </div>
+</section>
+
+<h2 class="text-center text-capitalize mb-5 lead fs-1">Our recents post</h2>
+
+<section class="container">
+  
+  <div class=" row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-between ">
+          {% for post in post %}
+          <div  class="carding pb-5 h-auto rounded boar_card">
+            <div class="card h-auto pb-md-3 border-info shadow">
+                <div class="img_resize">
+                  <a href="{{post.get_absolute_url}}">
+
+                      <img src="{{post.post_image.url}}" class="card-img img-fluid w-100 h-90 " alt="...">
+                  </a>
+                </div>
+
+
+                <div class="card-body">
+                  <a href="{{post.get_absolute_url}}">
+                       <h5 class="card-title text-center lead fs-5 fw-semibold ">{{post.title}}</h5>
+                   </a>
+                   <hr>
+                   <br>
+                  <p class="card-text">{{post.content | truncatewords:"24"}}</p>
+                  <hr>
+                  <a class="btn btn-outline-primary d-inline " href="{{post.get_absolute_url}}">Read more</a>
+                  <!-- <button class="btn btn-outline-primary">Read more</button> -->
+                  <!-- <span class="px-2">pub:{{post.created}}</span> -->
+                  <h2 class="pb-4 fw-lighter fs-5 pt-3 px-5 d-lg-inline">By
+                    <a class=" text-capitalize px-1" href="{% url 'profilapp:profile' post.post_by.profile.id %}">
+                      @{{post.post_by.profile.first_name}}
+                    </a>
+                  </h2>
+                  
+                </div>
+              </div>
+            </div>
+            
+            {% endfor %}
+      </div>
+</section>
+
+    <section class="">
+      <div class="container ">
+        <div class="accordion accordion-flush " id="accordionFlushExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+              <button class="bg-dark text-light h2 accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                Why Gardian?
+              </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi, eveniet. Deserunt inventore iste accusamus veniam, quo porro beatae repellendus obcaecati?</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+              <button class=" bg-dark text-light h2 accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                Our mission
+              </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo repellendus vel totam quibusdam nesciunt magni quam aliquam perspiciatis. Maiores mollitia, nesciunt laborum obcaecati dignissimos itaque voluptas libero nemo accusamus nostrum.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingThree">
+              <button class=" bg-dark text-light h2 accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                Our Passions
+              </button>
+            </h2>
+            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis eos quam, maxime doloremque, animi corporis consectetur fugiat odit reiciendis esse molestias eaque repellat voluptate nemo.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+{% endblock content %}
+    
+

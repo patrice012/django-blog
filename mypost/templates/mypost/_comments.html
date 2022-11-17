@@ -1,0 +1,152 @@
+<section>
+  <div class="container">
+    <div class="accordion-flush" id="accordionFlushExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#flush-collapseOne"
+            aria-expanded="false"
+            aria-controls="flush-collapseOne"
+          >
+            Laisser un commentaire
+          </button>
+        </h2>
+        <!-- </div> -->
+
+        <div
+          id="flush-collapseOne"
+          class="accordion-collapse collapse"
+          aria-labelledby="flush-headingOne"
+          data-bs-parent="#accordionFlushExample"
+        >
+        {% if request.user.is_authenticated %}
+          <section class="accordion-body">
+            <form action="" method="POST" class="container-fluid">
+              {% csrf_token %}
+              <div class="input-group pt-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                {{form.email}}
+              </div>
+
+              <div class="myForm pt-3">
+                <p>
+                  [&nbsp;<span
+                    class="intLink p-2"
+                    onclick="insertMetachars('&lt;strong&gt;','&lt;\/strong&gt;');"
+                    ><strong>Bold</strong></span
+                  >
+                  |
+                  <span
+                    class="intLink"
+                    onclick="insertMetachars('&lt;em&gt;','&lt;\/em&gt;');"
+                    ><em>Italic</em></span
+                  >
+                  |
+                  <span
+                    class="intLink"
+                    onclick="var newURL=prompt('Enter the full URL for the link');if(newURL){insertMetachars('&lt;a href=\u0022'+newURL+'\u0022&gt;','&lt;\/a&gt;');}else{document.myForm.myTxtArea.focus();}"
+                    >URL</span
+                  >
+                  |
+                  <span
+                    class="intLink"
+                    onclick="insertMetachars('\n&lt;code&gt;\n','\n&lt;\/code&gt;\n');"
+                    >code</span
+                  >
+                  |
+                  <span class="intLink" onclick="insertMetachars(' :-)');"
+                    >smile</span
+                  >
+                </p>
+                {{form.comment_body}} <input class="btn btn-outline-warning pt-2
+                mt-4" type="submit" value="Send"
+              </div>
+            </form>
+          </section>
+
+          {% else %}
+          <div class="container">
+            <p class="lead text-center m-3">
+              Connecter vous pour pouvoir commenter ce post!
+            </p>
+            <a class="btn btn-primary mb-3" href="#">Se connecter</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    
+
+<h1></h1>
+<section class="">
+    <div class="container">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingTwo">
+          <button
+            class="bg-dark text-light h2 accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#flush-collapseTwo"
+            aria-expanded="false"
+            aria-controls="flush-collapseTwo"
+          >
+            Voir les commentaires de ce post
+          </button>
+
+        </h2>
+
+        <div
+          id="flush-collapseTwo"
+          class="accordion-collapse collapse"
+          aria-labelledby="flush-headingTwo"
+          data-bs-parent="#accordionFlushExample"
+          >
+          <div class="accordion-body ">
+
+            
+            {% for comment in post.get_comments  %}
+            <div class=" d-flex comment_title align-items-sm-baseline justify-content-md-start justify-content-center">
+                <img class="d-inline" src="{{comment.comment_by.profile.url}}" alt="">
+                <h5 class="d-inline px-2">{{comment.comment_by.username}} <span class="px-3">E-mail: {{comment.email}}</span></h5>
+                <p class="d-inline px-4">depuis {{comment.created | timesince}}</p>
+            </div>
+            <div class=" border border-dark px-2 px-md-4">
+              <p class="w-auto"><span class=" lead text-wrap ">{{comment.comment_body}}</span></p>
+            </div>
+            {% endfor %}
+            
+            
+            {% comment %}
+                
+            
+            
+            {% else %}
+            <div class="container">
+              <p class="lead m-3 text-center">
+                Connecter vous pouvoir lire les commentaires
+              </p>
+              <form action="" method="GET">
+                <input name="" type="hidden">
+                
+                <!-- <a class=" mb-3"  href="{% url 'authapp:account_login' %}" >
+                    se connecter
+                </a> -->
+                {% endif %}
+                
+                
+            </div>
+            {% endcomment %}
+            
+        
+        </div>
+    </div>
+    </div>
+  </div>
+</section>

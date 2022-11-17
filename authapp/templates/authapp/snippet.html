@@ -1,0 +1,79 @@
+{% load i18n %}
+
+<div
+  class="modal fade rounded"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div
+        class="
+          container
+          text-light
+          w-auto w-lg-75
+          bg-dark
+          shadow shadow-lg
+          rounded
+        "
+      >
+        <div class="modal-header">
+          <h5 class="m-auto" id="exampleModalLabel">{% trans "Sign Out" %}</h5>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <p class="fs-2 text-center lead">
+              {% trans 'Are you sure you want to sign out?' %}
+            </p>
+
+            <form
+              class="text-center"
+              method="POST"
+              action="{% url 'authapp:account_logout' %}"
+            >
+              {% csrf_token %} {% if redirect_field_value %}
+              <input
+                type="hidden"
+                name="{{ redirect_field_name }}"
+                value="{{ redirect_field_value }}"
+              />
+              {% endif %}
+
+              <div
+                class="
+                  modal-footer
+                  d-flex
+                  justify-content-center
+                  align-items-center
+                  text-center
+                "
+              >
+
+                <button
+                  type="button"
+                  class="btn btn-info px-2 mx-3"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >Annuler</button>
+
+                <!-- <a
+                  class="btn btn-outline-info px-2 mx-3"
+                  href="{% url 'mypost:home' %}"
+                  >Annuler</a
+                > -->
+
+                <button class="btn btn-outline-warning px-2 mx-3" type="submit">
+                  {% trans 'Sign Out' %}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

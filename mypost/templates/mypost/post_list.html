@@ -1,0 +1,82 @@
+{% extends 'mypost/base.html' %}
+
+
+{% block content %}
+
+<section class="p-5 mt-5">
+      <h2 class=" lead fs-1 text-center text-capitalize mb-5 h5">Our recents post</h2>
+      <div class="container">
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-between align-items-center">
+          
+          {% for post in page_obj %}
+
+                <div  class="carding pb-5 h-auto rounded boar_card">
+            <div class="card h-auto pb-md-3 border-info shadow">
+                <div class="img_resize">
+                  <a href="{{post.get_absolute_url}}">
+                      <img src="{{post.post_image.url}}" class="card-img img-fluid w-100 h-90 " alt="...">
+                  </a>
+                </div>
+
+
+                <div class="card-body">
+                  <a href="{{post.get_absolute_url}}">
+                       <h5 class="my-2 card-title text-center lead fs-5 fw-semibold ">{{post.title}}</h5>
+                   </a>
+                   <hr>
+                   <br>
+                  <p class="card-text">{{post.content | truncatewords:"24"}}</p>
+                  <hr>
+                  <a class="btn btn-outline-primary d-inline " href="{{post.get_absolute_url}}">Read more</a>
+                  <!-- <button class="btn btn-outline-primary">Read more</button> -->
+                  <!-- <span class="px-2">pub:{{post.created}}</span> -->
+                  <h2 class="pb-4 fw-lighter fs-5 pt-3 px-5 d-lg-inline">By
+                    <a class=" text-capitalize px-1" href="{% url 'profilapp:profile' post.post_by.profile.id %}">
+                      @{{post.post_by.profile.first_name}}
+                    </a>
+                  </h2>
+                  
+                </div>
+              </div>
+            </div>
+            
+                
+            {% endfor %}
+
+        </div>
+    </section>
+
+
+<div aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class=" step-links page-item ">
+                    <a class="page-link" href="?page=1">first</a>
+            </li>
+            <li>
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+            </li>
+        {% endif %}
+        
+        {% for page_obj in page_obj.paginator %}
+            <li class="page-item  ">
+                <a class="page-link " aria-current="Page" href="?page={{page_obj.number}}">{{page_obj.number}}</a>
+            </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+            </li>
+            <li>
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last</a>
+            </li>
+        {% endif %}
+  </ul>
+</div>
+
+
+
+{% endblock content %}
+    

@@ -1,0 +1,42 @@
+{% extends 'mypost/base.html' %} {% block content %}
+
+<div class="">
+  <div class="container w-75 form-modif">
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="id_title" class="lead m-3">Titre</label>
+      {{form.errors.title}} {{form.title}}
+
+      <label for="id_overwiew" class="lead m-3">Bref appercu du post</label>
+      {{form.errors.overwiew}} {{form.overwiew}}
+
+      <label for="id_key_words" class="lead m-3"
+        >Mots clés... <span class="px-3">Facultatif</span>
+      </label>
+      {{form.errors.key_words}} {{form.key_words}}
+
+      <label for="id_content" class="lead m-3">Contenu du post</label>
+      {{form.errors.content}} {{form.content}}
+
+      <div class="d-block">
+        <label for="id_post_image" class="lead m-3">Associer une image</label>
+        {{form.errors.post_image}} {{form.post_image}}
+      </div>
+
+      <div class="d-block">
+        <label for="id_post_image" class="lead m-3">Lier a un post (Previous post)</label>
+        {{form.errors.previous_post}} {{form.previous_post}}
+      </div>
+
+      <div class="d-block">
+        <label for="id_post_image" class="lead m-3">Lier a un post (next post)</label>
+        {{form.errors.next_post}} {{form.next_post}}
+      </div>
+      
+      
+      <button class="btn btn-info mt-4" type="submit">Créer le post</button>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

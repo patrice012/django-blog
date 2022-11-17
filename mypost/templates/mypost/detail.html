@@ -1,0 +1,182 @@
+{% extends 'mypost/base.html' %} {% block content %}
+
+<main class="col">
+  <div class="img_full">
+    <img class="shadow detail-img" src="{{post.post_image.url}}" alt="" />
+  </div>
+  <div class="container-fluid text-center">
+    <h1
+      class="
+        lead
+        w-75
+        fs-2
+        text-light text-center
+        position-absolute
+        top-50
+        post-title
+      "
+    >
+      {{post.title}}
+    </h1>
+  </div>
+
+  <div class="row container-fluid mx-3 mx-lg-0 p-0 p-lg-5">
+    <div class="col-lg-2 px-lg-3 mb-5 mb-lg-2">
+      <!-- <h4 class="text-center m-4 mb-lg-4 mt-lg-0">Saisir un mot clé</h4>
+      <form class="d-flex mb-lg-3">
+        <input
+          class="form-control"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-warning" type="submit">Search</button>
+      </form> -->
+
+      
+      <div class="mt-4 mt-lg-0 text-center text-lg-start">
+        <a href="#partager" class="btn btn-info mb-lg-3">Partager le post</a>
+        <a href="{{post.get_comment_url}}" class="btn btn-outline-warning mb-lg-3"
+          >Commenter</a
+        >
+      </div>
+      <div class="mt-4 mt-lg-0 text-center text-lg-start">
+        
+        <a href="{% url 'mypost:post_create' %}" class="btn btn-info mb-lg-3"
+        >Create un post</a
+        >
+        {% if request.user.is_authenticated and user == post.post_by %}
+
+        <a href="{{post.get_update_url}}" class="btn btn-info mb-lg-3"
+          >Modifier le post</a
+        >
+
+        <!-- <a href="{{post.get_delete_url}}" class="btn btn-info mb-lg-3">Supprimer le post</a> -->
+        <a
+          class="btn btn-info mb-lg-3"
+          data-bs-toggle="modal"
+          href="#exampleModalToggle"
+          role="button"
+          >Supprimer le post
+        </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- =============modal======= -->
+
+    <div
+      class="modal fade"
+      id="exampleModalToggle"
+      aria-hidden="true"
+      aria-labelledby="exampleModalToggleLabel"
+      tabindex="-1"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalToggleLabel">
+              Suppression du post <em class="px-2"><< {{post.title}}>></em>
+            </h5>
+
+          </div>
+          {% if user.is_authenticated and user != post.post_by %}
+          <div class="container">
+            <p>Vous devez étre l'auteur de ce post pour pouvoir le supprimer</p>
+          </div>
+
+          {% else %}
+          <div class="modal-body">
+            <div class="">
+              <div class="container d-inline text-center">
+                <a
+                  type="button"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  class="d-inline btn btn-info text-dark lead mx-2"
+                  >Annuler la suppression</a
+                >
+
+                <!-- <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button> -->
+                <form
+                  class="d-inline"
+                  action="{{post.get_delete_url}}"
+                  method="POST"
+                  enctype="multipart/form-data"
+                >
+                  {% csrf_token %}
+                  <button class="btn btn-danger lead" type="submit">
+                    Confirmer la suppression
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================= -->
+
+    <div class="row col-lg-8 lead px-4 px-lg-5">
+      <p class="">{{post.content | safe}}</p>
+    </div>
+    <div class="row col-lg-2 my-3 my-lg-0">
+      <div class="container px-5 px-lg-0">
+        <h4 class="text-center mb-lg-4">Detail sur le post</h4>
+        <p>
+          Date de publication:
+          <span class="lead fw-bold">{{post.created}}</span>
+        </p>
+        <p>Modifier <span class="lead fw-bold">{{post.modified}}</span></p>
+        <p>
+          Auteur:
+          <span class="lead fw-bold text-uppercase"
+            ><a href="{% url 'profilapp:profile' post.post_by.profile.id %}">@{{post.post_by.profile.first_name}}</a>
+          </span>
+
+        <p>
+          <a class="lead text-capitalize" href="{% url 'profilapp:profile' post.post_by.profile.id %}">Voir le profil</a>
+        </p>
+        </p>
+        <p><span class="lead fw-bold">{{post.view_count}}</span> lectures</p>
+        <p>
+          <span class="lead fw-bold">{{post.comment_count}}</span> commentaires
+        </p>
+        
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<section class="container">
+<h3 class="text-center lead text-capitalize">Post recents</h3>
+
+{% for recent_post in most_recent %}
+  
+  {% if post.id != recent_post.id %}
+  <div class="container mb-5  ">
+    <a class="text-decoration-underline" href="{{recent_post.get_absolute_url}}">{{recent_post.title}}</a>
+    <p class="card-text">{{recent_post.content | truncatewords:"16"}}</p>
+    <p class="lead text-capitalize">by {{recent_post.post_by}} <span>le {{recent_post.created}}</span></p>
+  </div>
+
+  {% endif %}
+    
+{% endfor %}
+  
+</section>
+
+
+{% include 'mypost/_comments.html' %}
+
+{% endblock content %}

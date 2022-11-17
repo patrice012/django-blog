@@ -1,0 +1,174 @@
+{% extends 'mypost/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main class="">
+
+    <section class="row translate-y">
+        
+        <div class="col-md-3 pb-2 py-lg-5">
+            {% if user.is_authenticated and user == profile.user %}
+            <div class="mx-0 p-4">
+                <h4 class="text-center pt-lg-4">Actions principales</h4>
+                <a class="btn btn-outline-info m-1 " href="{% url 'mypost:post_create' %}">Create un post</a>
+                <a class="btn btn-outline-info m-1 " href="{% url 'profilapp:update_profile' profile.id %}">Update Profil</a>
+                <a class="btn btn-outline-info m-1" href="{% url 'authapp:change_password' %}">Change pssword</a>
+                
+            {% endif %}
+                    
+
+            </div>
+        </div>
+
+    <div class="rounded shadow  col-md-6 bg-dark text-light lead py-lg-3">
+        <div class="container pb-3 ">
+            <figure class="image pt-5 mt-5 d-block m-auto w-50">
+                {% if profile.picture %}
+                <a href="{{profile.picture.url}}">
+                    <img class="img-fluid rounded rounded-3 rounded-circle" src="{{ profile.picture.url }}">
+                </a>
+                {% else %}
+                <a href="{% static 'profilapp/images/pigeon.jpg' %}">
+                    <img class="img-fluid rounded rounded-pill " src="{% static 'profilapp/images/pigeon.jpg' %}" alt="" class="img-fluid">
+                </a>
+                    {% if user.is_authenticated and user == profile.user %}
+                        <p class="text-center pt-3">Photo de profil par defaut. Veuiller changez si vous le voullez!</p>
+                    {% endif %}
+                {% endif %}
+            </figure>
+
+            <div class="content text-center p-3">
+                <h1 class="d-inline">
+                    {% if profile.first_name %}
+                    {{ profile.first_name }} {{ profile.last_name }}
+                     {% endif %}
+                </h1>
+                <h2 class="fw-lighter pt-3">Tags:@{{profile.user}}</h2>
+            </div>
+            
+            <div class="container text-light">
+                <h4 class="text-center pt-5">Informations importantes</h4>
+                
+                <p class="text-center"><span class="fw-lighter
+                    ">Join</span> {{profile.created}}</p>
+                
+                {% if profile.proffession is not None %}
+                    
+                <p class="text-center"><span class="fw-lighter
+                    ">Proffesion: </span>{{profile.proffession}}</p>
+                {% else %}
+                
+                {% endif %}
+
+                {% if profile.experience is not None %}
+                    
+                <p class=" pt-3"><span class="fw-lighter 
+                    ">Année d'expérience:</span> {{profile.experience}}</p>
+                {% else %}
+                
+                {% endif %}
+
+                {% if profile.first_name is not None %}
+                    
+                <h4 class=" pt-3 text-center"><span class="fw-lighter  
+                    ">En savoir plus sur </span> {{profile.first_name}}</h4>
+                {% else %}
+                
+                {% endif %}
+                
+                    
+                {% if profile.tel is not None %}
+                <p class=" pt-3"> <span class="fw-lighter 
+                    ">Téléphone:</span> 
+                    {{profile.tel}}</p>
+                {% else %}
+                {% endif %}
+                        
+                
+                
+                {% if profile.email is not None %}
+                    
+                <p class=" pt-3"> <span class="fw-lighter 
+                    ">E-mail:</span> <a class="text-light px-2" href="mailto:{{profile.email}}">{{profile.email}}</a>
+                </p>
+                <p class=" pt-3"><a class="d-block text-light text-decoration-none" href="">Mail me</a>
+                </p>
+
+                {% else %}
+                {% endif %}
+                    
+                
+                
+                {% if profile.location is not None %}
+                <p class=" pt-3"> <span class="fw-lighter 
+                    ">Localisation:</span> 
+                     {{profile.location}}
+                </p>
+                {% else %}
+                {% endif %}
+                    
+                
+                <!--  travailler avec len pour trouver la taille de url et de bio -->
+                {% if profile.url is not None %}
+                    
+                <p class=" pt-3"> <span class="fw-lighter 
+                    ">Site web: <a class="text-light" href="{{profile.url}}" target="_blank">{{profile.url}}</a> </p>
+                {% else %}
+                {% endif %}
+                    
+                {% if profile.profile_info is not  None %}
+                
+                <p class=" pt-3"> <span class="fw-lighter
+                    ">Bio:</span> 
+                     {{profile.profile_info}}</p>
+                {% else %}
+                
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <div class=" col-md-3 py-lg-5 ">
+        <div class="container">
+            <h4 class="text-center">Statistiques</h4>
+            <h3>Post lu récément</h3>
+            
+            {% if last_post_view %}
+            
+                {% for last_post in last_post_view %}
+                    <a class="text-decoration-underline" href="{{last_post.get_absolute_url}}">{{last_post.title}}</a>
+                    <p>{{last_post.content| truncatewords:"50"}}</p>
+                    <p>by<span class="lead"> {{last_post.post_by}}</span> depuis <span> {{last_post.created}}</span></p>
+                {% endfor %}
+                    
+            {% endif %}
+                
+            
+
+                
+        </div>
+    </div>
+
+</section>
+
+
+    {% comment %}
+
+    {% if user.is_authenticated and user != profile.user %}
+        <div class="media-right">
+        {% if follow_status == True %}
+        <a href="{% url 'follow' profile.user 0 %}" class="button is-danger">Unfollow</a>
+        {% else %}
+        <a href="{% url 'follow' profile.user 1 %}" class="button is-success">Follow</a>
+        {% endif  %}
+    </div>
+    {% endif %}
+
+    {% endcomment %}
+</main>
+
+
+{% endblock content %}
+    

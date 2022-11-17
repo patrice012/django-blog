@@ -1,0 +1,28 @@
+{% extends "authapp/base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="container p-5">
+  <div class="container w-auto w-lg-75 bg-dark shadow shadow-lg rounded ">
+
+    <h1 >{% trans "Sign Out" %}</h1>
+
+    <div class="container">
+        
+      <h1 class=" pt-5 text-light fw-bold fs-3 text-center ">{% trans "Sign Out" %}</h1>
+      
+      <p class=" text-light fw-bold fs-3 text-center ">{% trans 'Are you sure you want to sign out?' %}</p>
+      
+      <form class="text-center pb-5" method="POST" action="">
+        {% csrf_token %}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <a class="btn btn-outline-info mx-4" href="{% url 'mypost:home' %}">Annuler</a>
+        <button class="btn btn-warning mx-4" type="submit">{% trans 'Sign Out' %}</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

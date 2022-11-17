@@ -1,0 +1,90 @@
+
+<nav class="p-3 navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+  <div class="container-fluid">
+    <a href="{% url 'mypost:home' %}" class="navbar-brand mx-5">Padawans</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navmenu"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse text-lg-center" id="navmenu">
+      <ul class="fs-5 navbar-nav me-auto">
+        <li class="nav-item">
+          <a href="{% url 'mypost:post_list' %}" class="nav-link text-capitalize">blog</a>
+        </li>
+
+        
+        {% if request.user.is_authenticated %}
+
+        {% comment %}
+          
+        {% endcomment %}
+        <li class="nav-item">
+          {% if request.user.profile.id %}
+          <a href="{% url 'profilapp:profile' request.user.profile.id %}" class="nav-link text-capitalize">Profil</a>
+          {% endif %}
+        </li>
+          
+        <li class="nav-item">
+          <a
+            data-bs-toggle="modal" 
+            data-bs-target="#exampleModal" 
+            href="{% url 'authapp:account_logout' %}" 
+            class="nav-link text-capitalize">logout</a>
+        </li>
+
+<!-- 
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+        {% else %}
+        
+        <li class="nav-item">
+          <a href="{% url 'authapp:account_login' %}" class="nav-link text-capitalize">login</a>
+        </li>
+          
+        {% endif %}
+          
+        <li class="nav-item">
+          <a href="#" class="nav-link text-capitalize">contact</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link text-capitalize">a propos</a>
+        </li>
+        
+      </ul>
+
+      <form action="{% url 'mypost:search_post'%}" method="GET" class="d-flex">
+        <input
+          name = 'q'
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-warning" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+

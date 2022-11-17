@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'mypost/_head.html' %}
+ <body class="body">
+     
+     {% block body %}
+
+        
+        {% comment %}
+        {% if messages %}
+        <div>
+        <strong>Messages:</strong>
+        <ul>
+            {% for message in messages %}
+            <li>{{message}}</li>
+            {% endfor %}
+        </ul>
+        </div>
+        {% endif %}
+        {% endcomment %}
+    
+        {% block content %}
+        
+        {% endblock %}
+
+    {% endblock %}
+
+    {% block extra_body %}
+    
+    {% endblock %}
+
+    {% include 'mypost/_footer.html' %}
+
+    
+    {% block script %}
+    
+    {% endblock script %}
+
+  </body>
+</html>

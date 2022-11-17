@@ -1,0 +1,62 @@
+{% extends "authapp/base.html" %}
+
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+<div class="container p-5">
+
+<div class="container rounded w-auto w-lg-75 bg-dark shadow ">
+
+<h1 class=" pt-3 text-light fw-bold fs-3 text-center ">{% trans "Sign In" %}</h1>
+
+<div class=" text-light">
+  <div class="container fs-5 text-center">
+    {% include 'authapp/messages.html' %}
+    {{form.errors}}
+  </div>
+  <p class="i-account text-center">You don't have an account? Then please <a class = "text-light lead mx-2" href="{% url 'authapp:account_signup' %}">sign up</a></p>
+</div>
+
+
+<form class="login text-light" method="POST" action="">
+  {% csrf_token %}
+    
+
+  <div class="container top-50 w-75 form-modif ">
+      <div class="">
+        <label class="lead m-3" for="id_login">Username:</label>
+        {{form.errors.username}}
+        {{form.username}}
+      </div>
+
+     <div class="">
+        <label class="lead m-3" for="id_password">Password:</label>
+        {{form.errors.new_password}}
+        {{form.new_password}}
+    </div>
+
+     <div class="form-container remember">
+        <label class="lead my-3" for="id_remember">Remember Me:</label>
+        {{form.errors.remember}}
+        {{form.remember}}
+    </div>
+  </div>
+    
+
+  <div class=" top-100 pb-5 container d-flex align-items-center justify-content-center ">
+
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <button class="mx-3 mx-lg-4 btn btn-primary primaryAction" type="submit">{% trans "Sign In" %}</button>
+    <a class="mx-3 mx-lg-4 btn btn-outline-warning  secondaryAction" href="">{% trans "Forgot Password?" %}</a>
+  </div>
+  </form>
+
+</div>
+
+</div>
+{% endblock %}
